@@ -1,0 +1,98 @@
+Run below queries to create tables.
+
+1. fact_order
+
+create table fact_order(
+  amz_order_id varchar(255) not null
+, sales_channel varchar(255)
+, currency_code varchar(255)
+, qty_ordered numeric(18, 2)
+, item_price numeric(18, 2)
+, marketplace_id varchar(255)
+, sku varchar(255) not null
+, updated_at date
+, ship_country_code varchar(255)
+, order_status varchar(255)
+, fulfillment_channel varchar(255)
+, ship_service_level varchar(255)
+, order_item_status varchar(255)
+, shipping_price numeric(18, 2)
+, shipping_tax numeric(18, 2)
+, item_discount numeric(18, 2)
+, ship_discount numeric(18, 2)
+, ship_city varchar(255)
+, purchase_at date
+, item_tax numeric(18, 2)
+, gift_wrap_price numeric(18, 2)
+, gift_wrap_tax numeric(18, 2)
+)
+
+2. fact_fee
+
+create table fact_fee (
+  mws_seller_id varchar(255)
+, marketplace_id varchar(255)
+, settlement_id varchar(255)
+, settlement_index varchar(255)
+, currency_code varchar(255)
+, transaction_type varchar(255)
+, order_id varchar(255) not null
+, shipment_id varchar(255)
+, amount_type varchar(255)
+, amount_description varchar(255)
+, amount numeric(18, 2)
+, posted_date date
+, order_item_code varchar(255)
+, sku varchar(255) not null
+, quantity_purchased numeric(18, 2)
+)
+
+3. dim_marketplace
+
+create table dim_marketplace (
+  id  SERIAL PRIMARY key
+, marketplace_id varchar(255) not null
+, marketplace_name varchar(255)
+, country_code varchar(55)
+, created_at date 
+, updated_at date
+) 
+
+4. dim_currency
+
+create table dim_currency (
+  id  SERIAL PRIMARY key
+, currency_code varchar(255) not null 
+, currency_symbol varchar(50)
+, currency_display_name varchar(55)
+, updated_at date
+, created_at date
+)
+
+5. dim_country
+
+create table dim_country (
+  id  SERIAL PRIMARY key
+, country_code varchar(255) not null
+, country_name varchar(255)
+, created_at date 
+, updated_at date
+)
+
+6. dim_product
+
+create table dim_product (
+  id  SERIAL PRIMARY key
+, product_sku varchar(255) not null 
+, product_parent_sku varchar(255)
+, product_name varchar(1024)
+, updated_at date
+, currency_code varchar(50)
+, price numeric(18, 2)
+, stock_qty numeric(18, 2)
+, is_active bool
+)
+# There is small mistake in data model and table column.
+Renamed product_parent_id - product_parent_sku
+
+# dim_marketplace, dim_currency, dim_country data has been filled once.
